@@ -14,6 +14,10 @@ import statsmodels.api as sm
 conn = psycopg2.connect(database = "machine_learning", user = "postgres", password = "postgres", host = "localhost", port = "5432")
 cur = conn.cursor()
 
+cur.execute("delete from arima")
+cur.execute("delete from hwes")
+cur.execute("delete from analysis where analysis = 'time';");
+
 cur.execute("SELECT * from dummy")
 
 rows = cur.fetchall()
@@ -129,7 +133,6 @@ for i in dataReal.values:
 for i in forecast_hwes.index:
     dataReal_date.append(str(i)[:10])
     
-cur.execute("delete from analysis where analysis = 'time';");
 dataTest = []
 for i in test.values:
     dataTest.append(i)

@@ -1,5 +1,5 @@
 <?php
-class UploadFile extends CI_Controller{
+class Control extends CI_Controller{
 
     public function index()
 	{
@@ -49,4 +49,8 @@ class UploadFile extends CI_Controller{
 			}
 			$this->load->view('pages/uploadreal');
 		}
+
+	public function deleteall(){
+		$this->load->view('pages/deleteall');
+	}
 }

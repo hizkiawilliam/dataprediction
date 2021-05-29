@@ -12,4 +12,7 @@ cur = conn.cursor()
 
 cur.execute("delete from arima")
 cur.execute("delete from hwes")
+cur.execute("delete from real")
+cur.execute("delete from dummy")
+cur.execute("delete from analysis");
 conn.commit()

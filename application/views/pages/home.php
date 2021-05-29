@@ -13,7 +13,12 @@
 	<script src="<?php echo base_url();?>js/vendor/modernizr-2.6.2.min.js"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
 	<style type="text/css">
-	
+	*
+  {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    color: rgb(231, 231, 231);
+  }
 	#loader{
 		display: none;
 	}
@@ -89,9 +94,8 @@
                 </div>
               </div>
               <div class="card-body">
-              <form action="<?php echo base_url();?>uploadFile/uploadData/" method="post" enctype="multipart/form-data">
+              <form action="<?php echo base_url();?>Control/uploadData/" method="post" enctype="multipart/form-data">
                 <input type="file" name="file" id = "upload" onchange = "enableRun()"/><br><br>
-                <!-- <input  class="btn btn-primary btn" type="submit" name="import" id = "import"></input><br><br> -->
                 <input type="submit" class="btn btn-primary btn" style = "align:'center'" onclick="open_script()" id = "runScript" placeholder></input>
               </form> 
               </div>
@@ -111,9 +115,29 @@
                 </div>
               </div>
               <div class="card-body">
-              <form action="<?php echo base_url();?>uploadFile/uploadDataReal/" method="post" enctype="multipart/form-data">
+              <form action="<?php echo base_url();?>Control/uploadDataReal/" method="post" enctype="multipart/form-data">
                 <input type="file" name="file" id = "uploadReal" onchange = "enableRun()"/><br><br>
-                <!-- <input  class="btn btn-primary btn" type="submit" name="import" id = "import"></input><br><br> -->
+                <input type="submit" class="btn btn-primary btn" style = "align:'center'" onclick="open_script()" id = "runScript" ></input>
+              </form> 
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">	
+            <div class="card card-red">
+              <div class="card-header">
+                <h3 class="card-title">
+                <i class="far fa-chart-bar"></i>
+                  Delete All Data
+                </h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+              <h6>Delete all recorded data and analysis</h6><br>
+              <form action="<?php echo base_url();?>Control/deleteall/" method="post" enctype="multipart/form-data">
                 <input type="submit" class="btn btn-primary btn" style = "align:'center'" onclick="open_script()" id = "runScript" ></input>
               </form> 
               </div>

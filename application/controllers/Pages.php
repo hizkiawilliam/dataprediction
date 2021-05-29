@@ -1,17 +1,20 @@
 <?php
 class Pages extends CI_Controller{
-    public function view($page = ''){
-        $models = ucfirst($page);           // Model for each page
-        $this->load->model($models);    
+    public function view($page = ''){  
         // Check if user has already logged in before
         if (empty($this->session->userdata['user_logged']))
         {
-            $data['message'] = '';
-            redirect('login/view','refresh'); 
+            $models = ucfirst('home');           
+            $this->load->model($models);
+            $data['datas'] = $this->$models->getValue();
+            $data['title'] = ucfirst($page);
+            $this->load->view('pages/home', $data);
         }
         // If user already logged in, send to requested page
         else
         {
+            $models = ucfirst($page);           
+            $this->load->model($models);
             $data['datas'] = $this->$models->getValue();
             $data['title'] = ucfirst($page);
             $this->load->view('pages/'.$page, $data);
