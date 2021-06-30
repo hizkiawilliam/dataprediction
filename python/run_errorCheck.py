@@ -10,7 +10,9 @@ from statsmodels.tsa.seasonal import seasonal_decompose
 from statsmodels.tsa.holtwinters import ExponentialSmoothing as HWES
 import statsmodels.api as sm
 
-
+#=============================================#
+#               Database Conn                 #
+#=============================================#
 conn = psycopg2.connect(database = "machine_learning", user = "postgres", password = "postgres", host = "localhost", port = "5432")
 cur = conn.cursor()
 
@@ -54,12 +56,16 @@ for i in dataArima.index:
 dataHwes_value = []
 for i in dataHwes.values:
     dataHwes_value.append(int(i))
-for i in dataReal.index:
+for i in dataHwes.index:
     dataHwes_value.append(str(i)[:10])
-    
-cur.execute("delete from analysis where analysis = 'error';");
 
-print(dataArima)
+
+#=============================================#
+#               Data Pushing                  #
+#=============================================#    
+cur.execute("delete from analysis where analysis = 'error';");
+cur.execute("delete from accuracy;");
+
 arimaErrors = [abs(dataReal_value[i]-dataArima_value[i])/dataReal_value[i] for i in range(len(dataReal_value))]
 arimaErrorsBias = sum(arimaErrors) * 1.0/len(dataReal_value) * 100
 
@@ -68,5 +74,11 @@ cur.execute("insert into analysis (algo,analysis,value) values (\'SARIMAX\', \'e
 hwesErrors = [abs(dataReal_value[i]-dataHwes_value[i])/dataReal_value[i] for i in range(len(dataReal_value))]
 hwesErrorsBias = sum(hwesErrors) * 1.0/len(dataReal_value) * 100
 cur.execute("insert into analysis (algo,analysis,value) values (\'HWES\', \'error\',"+str(hwesErrorsBias)+");");
+
+for i in range(0,len(dataReal_date)-1):
+    accuracySarimax = (dataReal_value[i]-abs(dataArima_value[i]-dataReal_value[i]))/dataReal_value[i]*100
+    accuracyHwes = (dataReal_value[i]-abs(dataHwes_value[i]-dataReal_value[i]))/dataReal_value[i]*100
+    cur.execute("insert into accuracy (month,value,algo) values (\'"+str(dataReal_date[i])+"\',"+str(round(accuracySarimax,2))+","+"\'Sarimax\'"+");");
+    cur.execute("insert into accuracy (month,value,algo) values (\'"+str(dataReal_date[i])+"\',"+str(round(accuracyHwes,2))+","+"\'Hwes\'"+");");
 
 conn.commit()

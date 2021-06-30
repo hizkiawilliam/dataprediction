@@ -12,10 +12,24 @@ class Home extends CI_Model{
         (select substring(month from 0 for 8) as month, value  from hwes) as tab2 on tab1.month = tab2.month;");
 
         $data['data_real'] =  $this->db->query("SELECT * FROM real");
-
-        $data['data_origin'] =  $this->db->query("SELECT * FROM dummy");
+        $percentData = $this->db->query("SELECT value::int FROM datarange")->row('value');
+        $totalData = $this->db->query("SELECT COUNT(*) FROM dummy")->row('count');
+        if ($totalData == 0){
+            $limitData = $totalData;
+        }
+        else{
+            $limitData = $percentData/100*$totalData;
+        }
+        // LIMIT {$limitData}
+        $data['data_origin'] =  $this->db->query("SELECT * FROM dummy order by month asc;");
         $data['analysis_error'] =  $this->db->query("SELECT * FROM analysis WHERE analysis = 'error';");
         $data['analysis_time'] =  $this->db->query("SELECT * FROM analysis WHERE analysis = 'time';");
+        $data['analysis_cpuUsage'] =  $this->db->query("SELECT * FROM analysis WHERE analysis = 'cpuUsage';");
+        $data['analysis_cpuMax'] =  $this->db->query("SELECT * FROM analysis WHERE analysis = 'cpuMax';");
+        $data['analysis_ram'] =  $this->db->query("SELECT * FROM analysis WHERE analysis = 'ram';");
+        $data['analysis_accuracy'] =  $this->db->query("select tab1.month as month, tab1.value as sarimax, tab2.value as hwes from
+        (select * from accuracy where algo = 'Sarimax') as tab1 inner join
+        (select * from accuracy where algo = 'Hwes') as tab2 on tab1.month = tab2.month;");
         return $data;
     }
 }?>

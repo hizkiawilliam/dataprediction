@@ -12,20 +12,21 @@ class Control extends CI_Controller{
 	            
 	            //open uploaded csv file with read only mode
 	            $csvFile = fopen($_FILES['file']['tmp_name'], 'r');
-	            
+	            $dataRange = $this->input->post('dataRange');
 	            // skip first line
 	            // if your csv file have no heading, just comment the next line
 				fgetcsv($csvFile);
 				
-	             //check whether dummy already exists in database with same periode
 				$this->db->query("DELETE FROM dummy");
+				$this->db->query("DELETE FROM datarange");
+				$this->db->insert("datarange", array("value"=>$dataRange));
 				while(($line = fgetcsv($csvFile)) !== FALSE){
 					$this->db->insert("dummy", array("month"=>$line[0], "passengers"=>$line[1]));
 				}
 	            //close opened csv file
 	            fclose($csvFile);
 		   }
-		   $this->load->view('pages/run');
+		   $this->load->view('pages/run',$dataRange);
 		}
 
 	public function uploadDataReal(){

@@ -15,4 +15,5 @@ cur.execute("delete from hwes")
 cur.execute("delete from real")
 cur.execute("delete from dummy")
 cur.execute("delete from analysis");
+cur.execute("delete from accuracy");
 conn.commit()

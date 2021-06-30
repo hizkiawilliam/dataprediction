@@ -17,7 +17,12 @@
   {
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
-    color: rgb(231, 231, 231);
+    color: rgb(100, 100, 100);
+  }
+  #textload{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    color: rgb(240, 240, 240);
   }
 	#loader{
 		display: none;
@@ -42,6 +47,12 @@
 		left:0;
 		z-index:999;
 	}
+  .content {
+  max-width: 1500px;
+  margin: auto;
+  background: white;
+  padding: 10px;
+}
 	</style>
 	<title>Data Prediction Algorithms</title>
 	<link rel="stylesheet" href="<?php echo base_url();?>css/bootstrap.css">
@@ -52,12 +63,12 @@
     <div id="dimmed">
       <div id="loader-wrapper">
         <div id="loader"></div>
-        <div id="progress"></div>
+        <div id="progress" class="textload"></div>
       </div>
     </div>
     <div class="wrapper">
     <header>
-    <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+    <nav class="main-header navbar navbar navbar-expand-md navbar-light navbar-white mx-auto order-0"  style = "text-align: center;">
       <div class="container">
         <!-- Left navbar links -->
         <ul class="navbar-nav">
@@ -77,118 +88,156 @@
       </div>
     </nav>
     </header>
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-3">	
-            <div class="card card-yellow">
-              <div class="card-header">
-                <h3 class="card-title">
-                <i class="far fa-chart-bar"></i>
-                  Upload Data Test
-                </h3>
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-                </div>
-              </div>
-              <div class="card-body">
-              <form action="<?php echo base_url();?>Control/uploadData/" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" id = "upload" onchange = "enableRun()"/><br><br>
-                <input type="submit" class="btn btn-primary btn" style = "align:'center'" onclick="open_script()" id = "runScript" placeholder></input>
-              </form> 
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-3">	
-            <div class="card card-green">
-              <div class="card-header">
-                <h3 class="card-title">
-                <i class="far fa-chart-bar"></i>
-                  Upload Data Real
-                </h3>
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-                </div>
-              </div>
-              <div class="card-body">
-              <form action="<?php echo base_url();?>Control/uploadDataReal/" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" id = "uploadReal" onchange = "enableRun()"/><br><br>
-                <input type="submit" class="btn btn-primary btn" style = "align:'center'" onclick="open_script()" id = "runScript" ></input>
-              </form> 
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-3">	
-            <div class="card card-red">
-              <div class="card-header">
-                <h3 class="card-title">
-                <i class="far fa-chart-bar"></i>
-                  Delete All Data
-                </h3>
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-                </div>
-              </div>
-              <div class="card-body">
-              <h6>Delete all recorded data and analysis</h6><br>
-              <form action="<?php echo base_url();?>Control/deleteall/" method="post" enctype="multipart/form-data">
-                <input type="submit" class="btn btn-primary btn" style = "align:'center'" onclick="open_script()" id = "runScript" ></input>
-              </form> 
-              </div>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-sm-12">	
-            <div class="card card-blue">
-              <div class="card-header">
-                <h3 class="card-title">
-                <i class="far fa-chart-bar"></i>
-                  Data Trend
-                </h3>
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-                </div>
-              </div>
-              <div class="card-body">
-                <div id="chartdiv"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6">	
-            <div class="card card-red">
-              <div class="card-header">
-                <h3 class="card-title">
-                <i class="far fa-chart-bar"></i>
-                  Analysis
-                </h3>
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-6">	
-                    <h3>Time Consumption (Second)</h3>
-                    <div id="chartdiv3"></div>
+    <div class="content">
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-4">	
+              <div class="card card-yellow">
+                <div class="card-header">
+                  <h3 class="card-title">
+                  <i class="far fa-chart-bar"></i>
+                    Upload Data Training 
+                  </h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
                   </div>
-                  <div class="col-sm-6">	
-                    <h3>Error Rate (%)</h3>
-                    <div id="chartdiv2"></div>
+                </div>
+                <div class="card-body">
+                <form action="<?php echo base_url();?>Control/uploadData/" method="post" enctype="multipart/form-data">
+                  <div class="row">
+                    <div class="col-sm-7">	
+                      <input type="file" name="file" id = "upload" onchange = "enableRun()"/><br><br>
+                    </div>
+                    <div class="col-sm-3">	
+                      <input type="range" class="form-range" min="70" max="100" step="1" id="dataRange" name="dataRange">
+                      <p><span id="dataRangeValue"></span></p>
+                    </div>
                   </div>
+                  <input type="submit" class="btn btn-primary btn" style = "align:'center'" onclick="open_script()" id = "runScript" placeholder></input>
+                </form> 
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">	
+              <div class="card card-green">
+                <div class="card-header">
+                  <h3 class="card-title">
+                  <i class="far fa-chart-bar"></i>
+                    Upload Data Real
+                  </h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                <form action="<?php echo base_url();?>Control/uploadDataReal/" method="post" enctype="multipart/form-data">
+                  <input type="file" name="file" id = "uploadReal" onchange = "enableRun()"/><br><br>
+                  <input type="submit" class="btn btn-primary btn" style = "align:'center'" onclick="open_script()" id = "runScript" ></input>
+                </form> 
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">	
+              <div class="card card-red">
+                <div class="card-header">
+                  <h3 class="card-title">
+                  <i class="far fa-chart-bar"></i>
+                    Delete All Data
+                  </h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                <h6>Delete all recorded data and analysis</h6><br>
+                <form action="<?php echo base_url();?>Control/deleteall/" method="post" enctype="multipart/form-data">
+                  <input type="submit" class="btn btn-primary btn" style = "align:'center'" onclick="open_script()" id = "runScript" ></input>
+                </form> 
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-12">	
+              <div class="card card-blue">
+                <div class="card-header">
+                  <h3 class="card-title">
+                  <i class="far fa-chart-bar"></i>
+                    Data Trend
+                  </h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div id="chartdiv"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">	
+              <div class="card card-red">
+                <div class="card-header">
+                  <h3 class="card-title">
+                  <i class="far fa-chart-bar"></i>
+                    Analysis
+                  </h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">	
+                      <h4>Time Consumption (Second)</h4>
+                      <div id="chartdiv3"></div>
+                    </div>
+                    <div class="col-sm-3">	
+                      <h4>CPU Usage (%)</h4><br>
+                      <div id="chartdiv4"></div>
+                    </div>
+                    <div class="col-sm-2">	
+                      <h4>Ram Usage (%)</h4><br>
+                      <div id="chartdiv5"></div>
+                    </div>
+                    <div class="col-sm-2">	
+                      <h4>Error Rate (%)</h4><br>
+                      <div id="chartdiv2"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">	
+              <div class="card card-blue">
+                <div class="card-header">
+                  <h3 class="card-title">
+                  <i class="far fa-chart-bar"></i>
+                    Accuracy (%)
+                  </h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div id="chartdiv6"></div>
                 </div>
               </div>
             </div>
@@ -196,7 +245,6 @@
         </div>
       </div>
     </div>
-  
   <script> 
 	var myVar;
 	function enableRun() {
@@ -225,9 +273,21 @@
 }
 #chartdiv2 {
   width: 100%;
-  height: 500px;
+  height: 400px;
 }
 #chartdiv3 {
+  width: 100%;
+  height: 400px;
+}
+#chartdiv4 {
+  width: 100%;
+  height: 400px;
+}
+#chartdiv5 {
+  width: 100%;
+  height: 400px;
+}
+#chartdiv6 {
   width: 100%;
   height: 500px;
 }
@@ -248,6 +308,15 @@
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url();?>assets/theme/dist/js/demo.js"></script>
 
+<script>
+var slider = document.getElementById("dataRange");
+var output = document.getElementById("dataRangeValue");
+output.innerHTML = slider.value + "%";
+
+slider.oninput = function() {
+  output.innerHTML = this.value + "%";
+}
+</script>
 <!-- Chart code -->
 <script>
 am4core.ready(function() {
@@ -492,5 +561,201 @@ var columnTemplate = series.columns.template;
 columnTemplate.strokeWidth = 2;
 columnTemplate.strokeOpacity = 1;
 
+}); // end am4core.ready()
+</script>
+
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+// Create chart instance
+var chart = am4core.create("chartdiv4", am4charts.XYChart);
+
+// Add data
+chart.data = [
+  <?php if($datas["analysis_cpuUsage"]->result() != null) {foreach($datas["analysis_cpuUsage"]->result() as $key) {?>
+{
+  "algo": "<?php echo $key->algo;?>",
+  "valueUsage": <?php echo round($key->value,2);?>,
+},<?php }}?>
+<?php if($datas["analysis_cpuMax"]->result() != null) {foreach($datas["analysis_cpuMax"]->result() as $key) {?>
+{
+  "algo": "<?php echo $key->algo;?>",
+  "valueMax": <?php echo round($key->value,2);?>,
+},<?php }}?>];
+
+// Create axes
+
+var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+categoryAxis.dataFields.category = "algo";
+categoryAxis.renderer.grid.template.location = 0;
+categoryAxis.renderer.minGridDistance = 30;
+
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+// Create series
+var series = chart.series.push(new am4charts.ColumnSeries());
+series.dataFields.valueY = "valueUsage";
+series.dataFields.categoryX = "algo";
+series.name = "CPU Usage";
+series.columns.template.tooltipText = "{categoryX} Average: [bold]{valueY} %[/]";
+series.columns.template.fillOpacity = .8;
+
+var series = chart.series.push(new am4charts.ColumnSeries());
+series.dataFields.valueY = "valueMax";
+series.dataFields.categoryX = "algo";
+series.name = "CPU Max";
+series.columns.template.tooltipText = "{categoryX} Max: [bold]{valueY} %[/]";
+series.columns.template.fillOpacity = .8;
+
+var columnTemplate = series.columns.template;
+columnTemplate.strokeWidth = 2;
+columnTemplate.strokeOpacity = 1;
+
+}); // end am4core.ready()
+</script>
+
+
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+// Create chart instance
+var chart = am4core.create("chartdiv5", am4charts.XYChart);
+
+// Add data
+chart.data = [
+  <?php if($datas["analysis_ram"]->result() != null) {foreach($datas["analysis_ram"]->result() as $key) {?>
+{
+  "algo": "<?php echo $key->algo;?>",
+  "value": <?php echo round($key->value,2);?>,
+},<?php }}?>];
+
+// Create axes
+
+var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+categoryAxis.dataFields.category = "algo";
+categoryAxis.renderer.grid.template.location = 0;
+categoryAxis.renderer.minGridDistance = 30;
+
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+// Create series
+var series = chart.series.push(new am4charts.ColumnSeries());
+series.dataFields.valueY = "value";
+series.dataFields.categoryX = "algo";
+series.name = "Ram Consumed";
+series.columns.template.tooltipText = "{categoryX}: [bold]{valueY} %[/]";
+series.columns.template.fillOpacity = .8;
+
+var columnTemplate = series.columns.template;
+columnTemplate.strokeWidth = 2;
+columnTemplate.strokeOpacity = 1;
+
+}); // end am4core.ready()
+</script>
+
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+// Create chart instance
+var chart = am4core.create("chartdiv6", am4charts.XYChart);
+
+// Add data
+chart.data = [
+ <?php if($datas["analysis_accuracy"]->result() != null) { foreach($datas["analysis_accuracy"]->result() as $key) {?>
+{
+  "date": "<?php echo $key->month?>",
+  "sarimax": <?php echo $key->sarimax;?>,
+  "hwes": <?php echo $key->hwes;?>,
+},<?php }}?>
+];
+
+// Set input format for the dates
+chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
+
+// Create axes
+var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+valueAxis.title.text = "Percentage (%)";
+// Create series
+var series = chart.series.push(new am4charts.LineSeries());
+series.dataFields.valueY = "sarimax";
+series.dataFields.dateX = "date";
+series.tooltipText = "{name}\n[bold font-size: 20]{valueY}%[/]"
+series.name = "Sarimax";
+series.stroke = chart.colors.getIndex(1);
+series.strokeWidth = 2;
+series.minBulletDistance = 15;
+
+var series2 = chart.series.push(new am4charts.LineSeries());
+series2.dataFields.valueY = "hwes";
+series2.dataFields.dateX = "date";
+series2.tooltipText = "{name}\n[bold font-size: 20]{valueY}%[/]"
+series2.stroke = chart.colors.getIndex(6);
+series2.name = "Hwes";
+series2.strokeWidth = 2;
+series2.minBulletDistance = 15;
+
+
+// Drop-shaped tooltips
+series.tooltip.background.cornerRadius = 20;
+series.tooltip.background.strokeOpacity = 0;
+series.tooltip.pointerOrientation = "vertical";
+series.tooltip.label.minWidth = 40;
+series.tooltip.label.minHeight = 40;
+series.tooltip.label.textAlign = "middle";
+series.tooltip.label.textValign = "middle";
+
+series2.tooltip.background.cornerRadius = 20;
+series2.tooltip.background.strokeOpacity = 0;
+series2.tooltip.pointerOrientation = "vertical";
+series2.tooltip.label.minWidth = 40;
+series2.tooltip.label.minHeight = 40;
+series2.tooltip.label.textAlign = "middle";
+series2.tooltip.label.textValign = "middle";
+
+// Make bullets grow on hover
+var bullet = series.bullets.push(new am4charts.CircleBullet());
+bullet.circle.strokeWidth = 2;
+bullet.circle.radius = 4;
+bullet.circle.fill = am4core.color("#fff");
+
+var bullethover = bullet.states.create("hover");
+bullethover.properties.scale = 1.3;
+
+var bullet2 = series2.bullets.push(new am4charts.CircleBullet());
+bullet2.circle.strokeWidth = 2;
+bullet2.circle.radius = 4;
+bullet2.circle.fill = am4core.color("#fff");
+
+var bullethover2 = bullet2.states.create("hover");
+bullethover2.properties.scale = 1.3;
+
+// Make a panning cursor
+chart.cursor = new am4charts.XYCursor();
+
+// Create vertical scrollbar and place it before the value axis
+chart.scrollbarY = new am4core.Scrollbar();
+chart.scrollbarY.parent = chart.leftAxesContainer;
+chart.scrollbarY.toBack();
+
+// Create a horizontal scrollbar with previe and place it underneath the date axis
+chart.scrollbarX = new am4charts.XYChartScrollbar();
+chart.scrollbarX.series.push(series);
+chart.scrollbarX.series.push(series2);
+chart.scrollbarX.parent = chart.bottomAxesContainer;
+
+chart.legend = new am4charts.Legend();
 }); // end am4core.ready()
 </script>
